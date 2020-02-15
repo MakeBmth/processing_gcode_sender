@@ -94,5 +94,7 @@ void sender(String gcode) {
       print("Didn't recognise the response: ");
       println(response);
     }
+  }else{
+    println("Grbl is not initalized. Please run senderInit() first.");
   }
 }
