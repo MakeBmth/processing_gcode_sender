@@ -10,5 +10,5 @@ void draw(){
   sender("G0 X100 Y10");
   sender("G0 X100 Y100");
   sender("G0 X0 Y0");
-  sender("sadf"); //Send some junk to make sure we handle errors
+  sender("notvalidgcode"); //Send some junk to make sure we handle errors
 }
