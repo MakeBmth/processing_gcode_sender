@@ -7,7 +7,7 @@ processing_gcode_sender is an attempt at creating a gcode sender function (and u
 This isn't a GUI gcode sender - its meant to be used from your code.
 ## Configuration
 
-Configure the serial port in gcodeSender.pde e.g. Serial myPort = new Serial(this, "COM9", 115200); (change "COM9" to match the serial port you are using to communicate with grbl)
+Configure the serial port in gcodeSender.pde e.g. `Serial myPort = new Serial(this, "COM9", 115200);` (change "COM9" to match the serial port you are using to communicate with grbl)
 
 ## Usage
 
