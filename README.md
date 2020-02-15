@@ -1,6 +1,6 @@
 # Processing gcode sender
  
-processing_gcode_sender is an attempt at creating a gcode sender function (and ultimatley make it a library) for processing and grbl to enable sending drawings to drawing machines on the fly.
+processing_gcode_sender is an attempt at creating a gcode sender function (and ultimatley make it a library) for processing to enable sending drawings to drawing machines on the fly. This is focused on grbl but should work with any similar gcode firmware that responds in the same way.
 
 ## What it isn't
 
