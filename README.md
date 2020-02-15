@@ -11,7 +11,7 @@ Configure the serial port in gcodeSender.pde e.g. `Serial myPort = new Serial(th
 
 ## Usage
 
-Add gcodeSender.pde to your sketch then in setup() call senderInit(); and give it an initalization command to set the feedrate "F1000" e.g. `senderInit("F1000");` This may be unnecessary - TBD.
+Add gcodeSender.pde to your sketch then in setup() call senderInit(); and give it an initalization command to set the feedrate "F1000" e.g. `senderInit("F1000");` The command may be unnecessary (TBD) but the senderInit() waits for the grbl startup message. When this message is seen, a flag is set that allows sender() to send so without this step, sender() will not do anything useful.
 
 Then from draw() you can call sender() and pass in your gcode command e.g. `sender("G0 X100 Y100");`
 
