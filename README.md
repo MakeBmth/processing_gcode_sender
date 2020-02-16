@@ -16,3 +16,6 @@ Add gcodeSender.pde to your sketch then in setup() call senderInit(); and give i
 Then from draw() you can call sender() and pass in your gcode command e.g. `sender("G0 X100 Y100");`
 
 The sender() call will block until it receives a response from grbl so if you are doing generative/reactive images, this would slow that to a crawl. You probably want to pick a frame and iterate over all the points in that frame, convert them to gcode and draw that frame in a differnt thread. 
+
+You can also use moveTo(x, y, feed) or drawTo(x, y, feed) which will construct the gcode for you.
+e.g. `moveTo(10, 10, 1000);` is equivalent to `sender("G0 X10 Y10 F1000");` while `drawTo(10, 10, 1000);` is equivalent to `sender("G1 X10 Y10 F1000");`
