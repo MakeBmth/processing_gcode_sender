@@ -28,14 +28,16 @@ boolean grblInit = false;
 String getGrblResponse(){
   // Blocks until we see a new line (the GRBL end of response terminator)
   String response = null;
-  print("Waiting for grbl"); //<>//
-  while (myPort.available() == 0){
+  print("Waiting for grbl");
+  while (myPort.available() < 4){ // 4 chars minimum expected 'o' 'k' '/' 'n'
     print(".");
-    delay(1000);
+    delay(50);
   }
   // Port is availalbe so read its contents.
-  while (myPort.available() > 0){
+  while (myPort.available() >= 4){  // 4 chars minimum expected 'o' 'k' '/' 'n'
+    //println(myPort.available());
     response = myPort.readString();
+    myPort.clear();
   }
   println("");  // This sends a newline after the dots to ensure the next console message is on its own line.
   return response;
@@ -44,7 +46,7 @@ String getGrblResponse(){
 
 String sendGrblCommand(String command){
   // Send a gcode command and get and return the response
-  print("Sending: "); //<>//
+  print("Sending: ");
   println(command);
   myPort.write(command);
   myPort.write(10);  // Send newline char '\n' (10 in ASCII)
@@ -53,7 +55,7 @@ String sendGrblCommand(String command){
 
 
 void senderInit(String initCommand) {
-  // Initalization: waits for the grbl startup string then sends the initCommand passed in. //<>//
+  // Initalization: waits for the grbl startup string then sends the initCommand passed in.
   String response = "";
   while(!grblInit){
     response = getGrblResponse();
@@ -76,7 +78,7 @@ void senderInit(String initCommand) {
 
 
 void sender(String gcode) {
-  // Sends to gcode string grbl and handle the responses //<>//
+  // Sends to gcode string grbl and handle the responses
   String response = "";
   if (grblInit) {
     response = sendGrblCommand(gcode);
@@ -91,10 +93,20 @@ void sender(String gcode) {
       //grblInit == false;
     }
     else{
-      print("Didn't recognise the response: ");
+      print("Didn't recognise the response: "); //<>//
       println(response);
     }
   }else{
     println("Grbl is not initalized. Please run senderInit() first.");
   }
+}
+
+void moveTo(float x, float y, float feed){
+  // Wrapper around sender() to format gcode G0 messages
+  sender("G0 X" + str(x) + " Y" + str(y) + " F" + str(feed));
+}
+
+void drawTo(float x, float y, float feed){
+  // Wrapper around sender() to format gcode G1 messages
+  sender("G1 X" + str(x) + " Y" + str(y) + " F" + str(feed));
 }
