@@ -20,7 +20,7 @@ works as is.
 
 import processing.serial.*;
 
-Serial myPort = new Serial(this, "COM9", 115200);
+Serial myPort = new Serial(this, "COM5", 115200);
 int counter =0;
 boolean grblInit = false;
 
@@ -103,10 +103,12 @@ void sender(String gcode) {
 
 void moveTo(float x, float y, float feed){
   // Wrapper around sender() to format gcode G0 messages
-  sender("G0 X" + str(x) + " Y" + str(y) + " F" + str(feed));
+  int floatPrecision = 3;
+  sender("G0 X" + nf(x, 0, floatPrecision) + " Y" + nf(y, 0, floatPrecision) + " F" + nf(feed, 0, floatPrecision));
 }
 
 void drawTo(float x, float y, float feed){
   // Wrapper around sender() to format gcode G1 messages
-  sender("G1 X" + str(x) + " Y" + str(y) + " F" + str(feed));
+  int floatPrecision = 3;
+  sender("G1 X" + nf(x, 0, floatPrecision) + " Y" + nf(y, 0, floatPrecision) + " F" + nf(feed, 0, floatPrecision));
 }
