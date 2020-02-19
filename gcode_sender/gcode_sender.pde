@@ -1,9 +1,35 @@
 void setup(){
   frameRate(1);
-  size(400,400);
+  size(450, 380);
   // Initalize grbl
-  senderInit("F10");
+  senderInit("G10 P0 L20 X0 Y0 Z0");  // Set origin to current position
   //sender("G0 X0 Y0");
+}
+
+void testRuler(){
+  println("Draw a 100mm ruler with 10mm and 2mm marks");
+  for(int i=0; i<100; i++){
+  //If we are on a divide by 10 draw a big line
+  //If we are on a divide by 2 (but not 10) draw a small line
+  //Also join up the lines
+  print("Iteration: " + str(i));
+  print(" Mod 10: " + str(i%10));
+  println(" Mod 2: " + str(i%2));
+  int tenMarker = 4;
+  int twoMarker = 2;
+  drawTo(i, 0, 1000);  
+  if(i%10 == 0){
+    println("Ten");
+    drawTo(i, tenMarker, 1000);
+    drawTo(i, 0, 1000);
+  }
+  if(i%2 == 0){
+    println("Two");
+    drawTo(i, twoMarker, 1000);
+    drawTo(i, 0, 1000);
+  }
+  //  drawTo(i  
+  }
 }
 
 void testSquareRaw(){
@@ -47,7 +73,7 @@ void testCircle(){
   
   for(int i=0; i<=360; i++){
     //sender("G1 X" + str(pointArray[i].x) + " Y" + str(pointArray[i].y) + " F5000");  // Constuct the gcode ourseves (as a string)
-    drawTo(pointArray[i].x, pointArray[i].y, 1000);  // Use the wrapper to construct the gcode (just send the coords and a feed
+    drawTo(pointArray[i].x, pointArray[i].y, 10000);  // Use the wrapper to construct the gcode (just send the coords and a feed
   }
 }
 
@@ -59,11 +85,13 @@ void testError(){
 void draw(){
   // Tests for the gcodeSender functions
   
-  testError();  // Test that we handle errors
+  //testError();  // Test that we handle errors
   
-  testSquareRaw();  // Draw a square using the raw string sender
+  //testSquareRaw();  // Draw a square using the raw string sender
   
-  testSquareWrappers();  // Draw a square using the moveTo() & drawTo() wrappers
+  //testSquareWrappers();  // Draw a square using the moveTo() & drawTo() wrappers
   
-  testCircle();  // Draw a circle
+  //testCircle();  // Draw a circle
+  
+  testRuler();  // Draw a 100mm ruler for calibration
 }
